@@ -1,5 +1,6 @@
 <?php
-include 'TestQueryStringParse.php';
+include '../utils/Constants.php';
+include './TestRequestParsing.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,35 +11,63 @@ include 'TestQueryStringParse.php';
     <title>TEST WS-WCONSULTING</title>
 </head>
 <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .font-test-style {
+        color: white;
+        font-weight: bold;
+        text-align: center;
+    }
     .red {
         background-color: red;
     }
     .green {
         background-color: green;
     }
+
+    table {
+        width: 800px;
+    }
+
+    .table-title {
+        font-size: 20px;
+        border-bottom: 2px solid red;
+    }
+
+    .test-title {
+        border-left: 5px solid orange;
+    }
 </style>
 <?php
-$test = new TestQueryStringParse();
+$test = new TestRequestParsing();
 $shouldParseQueryIsCorrect = $test->shouldParseQueryIsCorrect();
-$shouldParseQueryIsCorrectLabel = "KO";
-$shouldParseQueryIsCorrectClass = "red";
-if ($shouldParseQueryIsCorrect){
-    $shouldParseQueryIsCorrectLabel = "OK";
-    $shouldParseQueryIsCorrectClass = "green";
-}
+$shouldParseQueryIsCorrectLabel = $shouldParseQueryIsCorrect ? Constants::$TEST_OK : Constants::$TEST_KO;
+$shouldParseQueryIsCorrectClass = $shouldParseQueryIsCorrect ? Constants::$CLASS_GREEN : Constants::$CLASS_RED;
+
+$shouldGetRequestMethodIsCorrect = $test->shouldGetRequestMethodIsCorrect();
+$shouldGetRequestMethodIsCorrectLabel = $shouldGetRequestMethodIsCorrect ? Constants::$TEST_OK : Constants::$TEST_KO;
+$shouldGetRequestMethodIsCorrectClass = $shouldGetRequestMethodIsCorrect ? Constants::$CLASS_GREEN : Constants::$CLASS_RED;
+
+
 ?>
 <body>
-    <table border=1>
+    <table>
         <tr>
-            <td>Test</td>
-            <td>Resultat</td>
+            <td class="table-title">Tests</td>
+            <td class="table-title">Resultats</td>
         </tr>
         <tr>
-            <td>Query String Parsing</td>
-            <td class="<?php echo $shouldParseQueryIsCorrectClass; ?>">
-                <?php
-                    echo $shouldParseQueryIsCorrectLabel;
-                ?>
+            <td class="test-title">Query String Parsing</td>
+            <td class="font-test-style <?= $shouldParseQueryIsCorrectClass ?>">
+                <?= $shouldParseQueryIsCorrectLabel ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="test-title">Get Request Method</td>
+            <td class="font-test-style <?= $shouldGetRequestMethodIsCorrectClass ?>">
+                <?= $shouldGetRequestMethodIsCorrectLabel ?>
             </td>
         </tr>
     </table>

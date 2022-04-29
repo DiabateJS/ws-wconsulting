@@ -1,7 +1,7 @@
 <?php
-include "Constants.php";
+include "./Constants.php";
 
-class QueryStringParse {
+class RequestParsing {
     public static function parseQuery($ServerData){
         $query = $ServerData[Constants::$QUERY_STRING];
         $tab = explode(Constants::$PARAMS_SEPARATOR,$query);
@@ -13,6 +13,10 @@ class QueryStringParse {
             $res[$key] = $value;
         }
         return $res;
+    }
+
+    public static function getRequestMethod($ServerData){
+        return $ServerData[Constants::$REQUEST_METHOD];
     }
 }
 
