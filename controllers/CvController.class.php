@@ -18,9 +18,20 @@ class CvController {
     }
 
     public function getAll(){
+        $response = array(
+            "resultat" => "",
+            "code" => Constants::$SERVER_ERROR_CODE,
+            "errors" => []
+        );
         if ($this->method == Constants::$GET){
-
+            $cvManager = new CvManager();
+            $resultat = $cvManager->getAll();
+            if (count($resultat["errors"]) == 0){
+                $response["code"] = $resultat["code"];
+                $response["resultat"] = $resultat["data"];
+            }
         }
+        return $response;
     }
 
     public function getById(){
@@ -31,7 +42,7 @@ class CvController {
 
     public function create(){
         $response = array(
-            "message" => "",
+            "resultat" => "",
             "code" => Constants::$SERVER_ERROR_CODE,
             "errors" => []
         );
@@ -47,7 +58,7 @@ class CvController {
         $resultat = $cvManager->createCv($cv);
 
         $response["code"] = Constants::$SERVER_ERROR_CODE;
-        $response["message"] = $response["data"];
+        $response["resultat"] = $response["data"];
         if (count($resultat["errors"]) == 0){
             $response["code"] = Constants::$SUCESS_CODE;
         }
@@ -67,9 +78,16 @@ class CvController {
     }
 
     public function getView(){
-        if ( $this->method == Constants::$POST && $this->url == "cvs/" ){
-            return json_encode($this->create());
+        $json = "";
+        if ( $this->url == "cvs/" ){
+            if ( $this->method == Constants::$POST ){
+                $json = json_encode($this->create());
+            }
+            if ( $this->method == Constants::$GET ){
+                $json = json_encode($this->getAll());
+            }
         }
+        return $json;
     }
 
 } 
