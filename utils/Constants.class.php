@@ -10,6 +10,12 @@ class Constants {
     public static $SERVER_ERROR_CODE = 500;
     public static $SUCESS_CODE = 200;
 
+    public static $DEFAULT_RESPONSE = array(
+        "resultat" => "",
+        "code" => 500,
+        "errors" => []
+    );
+
     public static $POST = "POST";
     public static $GET = "GET";
     public static $PUT = "PUT";

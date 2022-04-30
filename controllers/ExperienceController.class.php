@@ -17,16 +17,8 @@ class ExperienceController {
         $this->route_info = $paramDico["route_info"];    
     }
 
-    private function getDefaultResponse() {
-        return array(
-            "resultat" => "",
-            "code" => Constants::$SERVER_ERROR_CODE,
-            "errors" => []
-        );
-    }
-
     public function getAll(){
-        $response = $this->getDefaultResponse();
+        $response = Constants::$DEFAULT_RESPONSE;
         $expManager = new ExperienceManager();
         $resultat = $expManager->getAllExperiences($this->route_info[1]);
         if (count($resultat["errors"]) == 0){
@@ -37,7 +29,7 @@ class ExperienceController {
     }
 
     public function getById(){
-        $response = $this->getDefaultResponse();
+        $response = Constants::$DEFAULT_RESPONSE;
         if (count($this->route_info) == 4){
             $expManager = new ExperienceManager();
             $resultat = $expManager->getById($this->route_info[1], $this->route_info[3]);
@@ -50,7 +42,7 @@ class ExperienceController {
     }
 
     public function create(){
-        $response = $this->getDefaultResponse();
+        $response = Constants::$DEFAULT_RESPONSE;
 
         $client = $this->dico["client"];
         $description = $this->dico["description"];

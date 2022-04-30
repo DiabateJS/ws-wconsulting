@@ -17,20 +17,12 @@ class CvController {
         $this->route_info = $paramDico["route_info"];    
     }
 
-    private function getDefaultResponse() {
-        return array(
-            "resultat" => "",
-            "code" => Constants::$SERVER_ERROR_CODE,
-            "errors" => []
-        );
-    }
-
     public function getAll(){
-        $response = $this->getDefaultResponse();
+        $response = Constants::$DEFAULT_RESPONSE;
         $cvManager = new CvManager();
         $resultat = $cvManager->getAll();
         if (count($resultat["errors"]) == 0){
-            $response["code"] = $resultat["code"];
+            $response["code"] = Constants::$SUCESS_CODE;
             $response["resultat"] = $resultat["data"];
         }
         return $response;
@@ -40,12 +32,12 @@ class CvController {
         $begin = $this->route_info[0];
         $id = $this->route_info[1];
 
-        $response = $this->getDefaultResponse();
+        $response = Constants::$DEFAULT_RESPONSE;
         if ($begin == "cvs" && strlen($id) > 0){
             $cvManager = new CvManager();
             $resultat = $cvManager->getById($id);
             if (count($resultat["errors"]) == 0){
-                $response["code"] = $resultat["code"];
+                $response["code"] = Constants::$SUCESS_CODE;;
                 $response["resultat"] = $resultat["data"];
             }
         }
@@ -53,7 +45,7 @@ class CvController {
     }
 
     public function create(){
-        $response = $this->getDefaultResponse();
+        $response = Constants::$DEFAULT_RESPONSE;
 
         $titre = $this->dico["titre"];
         $poste = $this->dico["poste"];
