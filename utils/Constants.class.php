@@ -51,6 +51,6 @@ class Constants {
     //SQL
     public static $SQL_CREATE_CV = "insert into cv (titre, poste, annee, dispo, intro, userid) values (:titre, :poste, :annee, :dispo, :intro, :userid)";
     public static $SQL_ALL_CV = "select c.id, c.titre, c.poste, c.annee, c.dispo, c.intro, c.userid, u.name from cv c, user u where c.userid = u.id";
-
+    public static $SQL_CV_BY_ID = "select c.id, c.titre, c.poste, c.annee, c.dispo, c.intro, c.userid, u.name from cv c, user u where c.userid = u.id and c.id = :id";
 }
 ?>

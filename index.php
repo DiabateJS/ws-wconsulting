@@ -21,6 +21,6 @@ if ($queryMethod == Constants::$DELETE){
     parse_str(file_get_contents('php://input'), $queryStringDico[Constants::$DELETE]);
 }
 
-$cvController = new CvController($queryStringDico);
-echo $cvController->getView();
+$controller = new CvController($queryStringDico);
+echo $controller->getView();
 ?>

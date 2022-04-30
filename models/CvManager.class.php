@@ -32,7 +32,7 @@ class CvManager {
     }
 
     function getById($id){
-        $sql = "select c.id, c.titre, c.poste, c.annee, c.dispo, c.intro, c.userid, u.name from cv c, user u where c.userid = u.id and c.id = :id";
+        $sql = Constants::$SQL_CV_BY_ID;
         $entete = array("id","titre","poste","annee","dispo","intro","userid","name");
         $dicoParam = array (
             "id" => $id
