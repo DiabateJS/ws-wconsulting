@@ -25,7 +25,7 @@ class CvManager {
     }
 
     function getAll(){
-        $sql = "select c.id, c.titre, c.poste, c.annee, c.dispo, c.intro, c.userid, u.name from cv c, user u where c.userid = u.id";
+        $sql = Constants::$SQL_ALL_CV;
         $entete = array("id","titre","poste","annee","dispo","intro","userid","name");
         $result = $this->bdManager->executeSelect($sql, $entete);
         return $result;
