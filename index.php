@@ -3,6 +3,7 @@ include "utils/Constants.class.php";
 include "utils/RequestParsing.class.php";
 include "controllers/CvController.class.php";
 include "./controllers/ExperienceController.class.php";
+include "./controllers/FormationController.class.php";
 
 $queryMethod = RequestParsing::getRequestMethod($_SERVER);
 $queryStringDico = RequestParsing::parseQuery($_SERVER);
@@ -29,6 +30,9 @@ if (count($tab_route) == 2 && $tab_route[0] == "cvs"){
 }
 if (count($tab_route) == 4 && $tab_route[2] == "experiences"){
     $controller = new ExperienceController($queryStringDico);
+}
+if (count($tab_route) == 4 && $tab_route[2] == "formations"){
+    $controller = new FormationController($queryStringDico);
 }
 
 if ($controller != null){

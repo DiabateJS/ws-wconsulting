@@ -1,9 +1,9 @@
 <?php
 include "../utils/Constants.class.php";
-include dirname(__DIR__)."/models/Experience.class.php";
-include dirname(__DIR__)."/models/ExperienceManager.class.php";
+include dirname(__DIR__)."/models/Formation.class.php";
+include dirname(__DIR__)."/models/FormationManager.class.php";
 
-class ExperienceController {
+class FormationController {
     private $dico;
     private $method;
     private $url;
@@ -19,8 +19,8 @@ class ExperienceController {
 
     public function getAll(){
         $response = Constants::$DEFAULT_RESPONSE;
-        $expManager = new ExperienceManager();
-        $resultat = $expManager->getAllExperiences($this->route_info[1]);
+        $formationManager = new FormationManager();
+        $resultat = $formationManager->getAllFormations($this->route_info[1]);
         if (count($resultat["errors"]) == 0){
             $response["code"] = Constants::$SUCESS_CODE;
             $response["resultat"] = $resultat["data"];
@@ -31,8 +31,8 @@ class ExperienceController {
     public function getById(){
         $response = Constants::$DEFAULT_RESPONSE;
         if (count($this->route_info) == 4){
-            $expManager = new ExperienceManager();
-            $resultat = $expManager->getById($this->route_info[1], $this->route_info[3]);
+            $formationManager = new FormationManager();
+            $resultat = $formationManager->getById($this->route_info[1], $this->route_info[3]);
             if (count($resultat["errors"]) == 0){
                 $response["code"] = Constants::$SUCESS_CODE;
                 $response["resultat"] = $resultat["data"];
@@ -44,13 +44,14 @@ class ExperienceController {
     public function create(){
         $response = Constants::$DEFAULT_RESPONSE;
 
-        $client = $this->dico["client"];
+        $organisme = $this->dico["organisme"];
+        $annee = $this->dico["annee"];
         $description = $this->dico["description"];
         $idcv = $this->route_info[1];
         
-        $experience = new Experience($client, $description, $idcv);
-        $expManager = new ExperienceManager();
-        $resultat = $expManager->create($experience);
+        $formation = new Formation($organisme, $annee, $description, $idcv);
+        $formationManager = new FormationManager();
+        $resultat = $formationManager->create($formation);
 
         $response["code"] = Constants::$SERVER_ERROR_CODE;
         $response["resultat"] = $response["data"];
@@ -75,7 +76,7 @@ class ExperienceController {
     public function getView(){
         $json = "";
         if ( count($this->route_info) == 4 &&  $this->route_info[0] == "cvs"
-             && $this->route_info[2] == "experiences" && trim($this->route_info[3]) == "" ){
+             && $this->route_info[2] == "formations" && trim($this->route_info[3]) == "" ){
             if ( $this->method == Constants::$POST ){
                 $json = json_encode($this->create());
             }
@@ -85,7 +86,7 @@ class ExperienceController {
         }
 
         if ( count($this->route_info) == 4 &&  $this->route_info[0] == "cvs"
-             && $this->route_info[2] == "experiences" && trim($this->route_info[3]) != "" ){
+             && $this->route_info[2] == "formations" && trim($this->route_info[3]) != "" ){
             if ( $this->method == Constants::$GET ){
                 $json = json_encode($this->getById());
             }

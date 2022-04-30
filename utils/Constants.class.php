@@ -64,5 +64,10 @@ class Constants {
     public static $SQL_CREATE_EXPERIENCE = "insert into experience (client, description, idcv) values (:client, :description, :idcv)";
     public static $SQL_SELECT_EXPERIENCES = "select id, client, description from experience where idcv = :idcv";
     public static $SQL_SELECT_EXPERIENCE_BY_ID = "select id, client, description from experience where idcv = :idcv and id = :idExperience";
+
+    //FORMATION
+    public static $SQL_CREATE_FORMATION = "insert into formation(organisme, annee, description, idcv) values (:organisme, :annee, :description, :idcv)";
+    public static $SQL_SELECT_FORMATIONS = "select id, organisme, annee, description from formation where idcv = :idcv";
+    public static $SQL_SELECT_FORMATION_BY_ID = "select id, organisme, annee, description from formation where idcv = :idcv and id = :idFormation";
 }
 ?>
