@@ -1,6 +1,6 @@
 <?php
-include '../utils/Constants.php';
-include './TestRequestParsing.php';
+include '../utils/Constants.class.php';
+include './TestRequestParsing.class.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +50,9 @@ $shouldGetRequestMethodIsCorrect = $test->shouldGetRequestMethodIsCorrect();
 $shouldGetRequestMethodIsCorrectLabel = $shouldGetRequestMethodIsCorrect ? Constants::$TEST_OK : Constants::$TEST_KO;
 $shouldGetRequestMethodIsCorrectClass = $shouldGetRequestMethodIsCorrect ? Constants::$CLASS_GREEN : Constants::$CLASS_RED;
 
-
+$shouldUrlParsingIsCorrect = $test->shouldUrlParsingIsCorrect();
+$shouldUrlParsingIsCorrectLabel = $shouldUrlParsingIsCorrect ? Constants::$TEST_OK : Constants::$TEST_KO;
+$shouldUrlParsingIsCorrectClass = $shouldUrlParsingIsCorrect ? Constants::$CLASS_GREEN : Constants::$CLASS_RED;
 ?>
 <body>
     <table>
@@ -68,6 +70,12 @@ $shouldGetRequestMethodIsCorrectClass = $shouldGetRequestMethodIsCorrect ? Const
             <td class="test-title">Get Request Method</td>
             <td class="font-test-style <?= $shouldGetRequestMethodIsCorrectClass ?>">
                 <?= $shouldGetRequestMethodIsCorrectLabel ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="test-title">Url Parsing</td>
+            <td class="font-test-style <?= $shouldUrlParsingIsCorrectClass ?>">
+                <?= $shouldUrlParsingIsCorrectLabel ?>
             </td>
         </tr>
     </table>
