@@ -37,9 +37,19 @@ class CvController {
     }
 
     public function getById(){
-        if ($this->method == Constants::$GET){
+        $begin = $this->route_info[0];
+        $id = $this->route_info[1];
 
+        $response = $this->getDefaultResponse();
+        if ($begin == "cvs" && strlen($id) > 0){
+            $cvManager = new CvManager();
+            $resultat = $cvManager->getById($id);
+            if (count($resultat["errors"]) == 0){
+                $response["code"] = $resultat["code"];
+                $response["resultat"] = $resultat["data"];
+            }
         }
+        return $response;
     }
 
     public function create(){
@@ -83,6 +93,12 @@ class CvController {
             }
             if ( $this->method == Constants::$GET ){
                 $json = json_encode($this->getAll());
+            }
+        }
+
+        if ( $this->route_info[0] == "cvs" &&  $this->route_info[1] != "" ){
+            if ( $this->method == Constants::$GET ){
+                $json = json_encode($this->getById());
             }
         }
         return $json;

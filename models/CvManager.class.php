@@ -30,6 +30,16 @@ class CvManager {
         $result = $this->bdManager->executeSelect($sql, $entete);
         return $result;
     }
+
+    function getById($id){
+        $sql = "select c.id, c.titre, c.poste, c.annee, c.dispo, c.intro, c.userid, u.name from cv c, user u where c.userid = u.id and c.id = :id";
+        $entete = array("id","titre","poste","annee","dispo","intro","userid","name");
+        $dicoParam = array (
+            "id" => $id
+        );
+        $result = $this->bdManager->executePreparedSelect($sql, $dicoParam, $entete);
+        return $result;
+    }
 }
 
 ?>
