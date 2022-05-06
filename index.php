@@ -5,6 +5,10 @@ include "controllers/CvController.class.php";
 include "./controllers/ExperienceController.class.php";
 include "./controllers/FormationController.class.php";
 include "./controllers/LangueController.class.php";
+include "./controllers/CompetencesController.class.php";
+
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 $queryMethod = RequestParsing::getRequestMethod($_SERVER);
 $queryStringDico = RequestParsing::parseQuery($_SERVER);
@@ -28,6 +32,9 @@ $tab_route = $queryStringDico["route_info"];
 $controller = null;
 if (count($tab_route) == 2 && $tab_route[0] == "cvs"){
     $controller = new CvController($queryStringDico);
+}
+if (count($tab_route) == 2 && $tab_route[0] == "competences"){
+    $controller = new CompetencesController($queryStringDico);
 }
 if (count($tab_route) == 4 && $tab_route[2] == "experiences"){
     $controller = new ExperienceController($queryStringDico);
