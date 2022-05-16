@@ -37,8 +37,8 @@ class CvController {
             $cvManager = new CvManager();
             $resultat = $cvManager->getById($id);
             if (count($resultat["errors"]) == 0){
-                $response["code"] = Constants::$SUCESS_CODE;;
-                $response["resultat"] = $resultat["data"];
+                $response["code"] = Constants::$SUCESS_CODE;
+                $response["resultat"] = $resultat;
             }
         }
         return $response;

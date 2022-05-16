@@ -59,6 +59,7 @@ class Constants {
     public static $SQL_CREATE_CV = "insert into cv (titre, poste, annee, dispo, intro, userid) values (:titre, :poste, :annee, :dispo, :intro, :userid)";
     public static $SQL_ALL_CV = "select c.id, c.titre, c.poste, c.annee, c.dispo, c.intro, c.userid, u.name from cv c, user u where c.userid = u.id";
     public static $SQL_CV_BY_ID = "select c.id, c.titre, c.poste, c.annee, c.dispo, c.intro, c.userid, u.name from cv c, user u where c.userid = u.id and c.id = :id";
+    public static $SQL_CV_LANGUAGES_BY_ID = "select cl.id, l.libelle, cl.level from cv_languages cl, languages l where cl.idlangage = l.id and idcv = :id";
 
     //EXPERIENCE
     public static $SQL_CREATE_EXPERIENCE = "insert into experience (client, description, idcv) values (:client, :description, :idcv)";

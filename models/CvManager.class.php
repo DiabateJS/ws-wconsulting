@@ -38,6 +38,11 @@ class CvManager {
             "id" => $id
         );
         $result = $this->bdManager->executePreparedSelect($sql, $dicoParam, $entete);
+
+        $sql = Constants::$SQL_CV_LANGUAGES_BY_ID;
+        $entete = array("id","libelle", "level");
+        $result1 = $this->bdManager->executePreparedSelect($sql, $dicoParam, $entete);
+        $result["data"][0]["langages"] = $result1["data"];
         return $result;
     }
 }
