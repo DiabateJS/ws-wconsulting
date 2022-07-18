@@ -48,7 +48,7 @@ class AuthController {
         $json = "";
         if ( count($this->route_info) == 2 &&  $this->route_info[0] == "auth"
              && trim($this->route_info[1]) == "" ){
-            if ( $this->method == Constants::$POST ){
+            if ( $this->method == Constants::$GET ){
                 $user = new User($this->dico["login"], $this->dico["password"]);
                 $userManager = new UserManager();
                 $json = json_encode($userManager->auth($user));
