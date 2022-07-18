@@ -75,5 +75,7 @@ class Constants {
     public static $SQL_CREATE_LANGUE = "insert into langue(libelle, niveau, idcv) values (:libelle, :niveau, :idcv)";
     public static $SQL_SELECT_LANGUES = "select id, libelle, niveau from langue where idcv = :idcv";
     public static $SQL_SELECT_LANGUE_BY_ID = "select id, libelle, niveau from langue where idcv = :idcv and id = :idLangue";
+
+    public static $SQL_SELECT_USER = "select id, name, login, idprofile from user where login = :login and mdp = :password";
 }
 ?>

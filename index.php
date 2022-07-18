@@ -6,6 +6,7 @@ include "./controllers/ExperienceController.class.php";
 include "./controllers/FormationController.class.php";
 include "./controllers/LangueController.class.php";
 include "./controllers/CompetencesController.class.php";
+include "./controllers/AuthController.class.php";
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -30,6 +31,9 @@ if ($queryMethod == Constants::$DELETE){
 
 $tab_route = $queryStringDico["route_info"];
 $controller = null;
+if (count($tab_route) == 2 && $tab_route[0] == "auth"){
+    $controller = new AuthController($queryStringDico);
+}
 if (count($tab_route) == 2 && $tab_route[0] == "cvs"){
     $controller = new CvController($queryStringDico);
 }
