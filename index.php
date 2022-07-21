@@ -6,6 +6,7 @@ include "./controllers/ExperienceController.class.php";
 include "./controllers/FormationController.class.php";
 include "./controllers/LangueController.class.php";
 include "./controllers/CompetencesController.class.php";
+include "./controllers/CompetenceFonctionnelleController.class.php";
 include "./controllers/AuthController.class.php";
 
 header('Access-Control-Allow-Origin: *');
@@ -48,6 +49,9 @@ if (count($tab_route) == 4 && $tab_route[2] == "formations"){
 }
 if (count($tab_route) == 4 && $tab_route[2] == "langues"){
     $controller = new LangueController($queryStringDico);
+}
+if (count($tab_route) == 4 && $tab_route[2] == "competences_fonctionnelles"){
+    $controller = new CompetenceFonctionnelleController($queryStringDico);
 }
 
 if ($controller != null){

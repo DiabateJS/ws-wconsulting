@@ -75,7 +75,14 @@ class Constants {
     public static $SQL_CREATE_LANGUE = "insert into langue(libelle, niveau, idcv) values (:libelle, :niveau, :idcv)";
     public static $SQL_SELECT_LANGUES = "select id, libelle, niveau from langue where idcv = :idcv";
     public static $SQL_SELECT_LANGUE_BY_ID = "select id, libelle, niveau from langue where idcv = :idcv and id = :idLangue";
-
+    
+    // USER
     public static $SQL_SELECT_USER = "select id, name, login, idprofile from user where login = :login and mdp = :password";
+
+    // COMPETENCES FONCTIONNELLES
+    public static $SQL_SELECT_COMPETENCES_FONCTIONNELLES = "select id, libelle, description from competences_fonctionnelles where idcv = :idcv";
+    public static $SQL_CREATE_COMPETENCE_FONCTIONNELLE = "insert into competences_fonctionnelles (libelle, description, idcv) values (:libelle, :description, :idcv)";
+    public static $SQL_SELECT_COMPETENCE_FONCTIONNELLE = "select id, libelle, description from competences_fonctionnelles where idcv = :idcv and id = :idCompFonct";
+
 }
 ?>
