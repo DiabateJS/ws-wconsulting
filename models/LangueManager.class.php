@@ -21,6 +21,28 @@ class LangueManager {
         return $result;
     }
 
+    function delete($idLangue) {
+        $sql = Constants::$SQL_DELETE_LANGUE;
+        $dicoParam = array (
+            "idLangue" => $idLangue
+        );
+        $result = $this->bdManager->executePreparedQuery($sql, $dicoParam);
+        return $result;
+    }
+
+    function update($langue){
+        $sql = Constants::$SQL_UPDATE_LANGUE;
+        $dicoParam = array (
+            "libelle" => $langue->libelle,
+            "niveau" => $langue->niveau,
+            "idLangue" => $langue->id
+        );
+        $result = $this->bdManager->executePreparedQuery($sql, $dicoParam);
+        return $result;
+    }
+
+
+
     function getAllLangues($idcv){
         $sql = Constants::$SQL_SELECT_LANGUES;
         $entete = array("id","libelle","niveau");

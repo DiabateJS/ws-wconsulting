@@ -43,9 +43,9 @@ class LangueController {
 
     public function create(){
         $response = Constants::$DEFAULT_RESPONSE;
-
-        $libelle = $this->dico["libelle"];
-        $niveau = $this->dico["niveau"];
+        $dico = $this->dico[Constants::$POST];
+        $libelle = $dico["libelle"];
+        $niveau = $dico["niveau"];
         $idcv = $this->route_info[1];
         
         $langue = new Langue($libelle, $niveau, $idcv);
@@ -61,15 +61,37 @@ class LangueController {
     }
 
     public function update(){
-        if ($this->method == Constants::$PUT){
+        $response = Constants::$DEFAULT_RESPONSE;
+        $dico = $this->dico[Constants::$PUT];
+        $libelle = $dico["libelle"];
+        $niveau = $dico["niveau"];
+        $idcv = $this->route_info[1];
+        $idLangue = $this->route_info[3];
+        
+        $langue = new Langue($libelle, $niveau, $idcv);
+        $langue->id = $idLangue;
+        $langueManager = new LangueManager();
+        $resultat = $langueManager->update($langue);
 
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function delete(){
-        if ($this->method == Constants::$DELETE){
-
+        $response = Constants::$DEFAULT_RESPONSE;
+        $idLangue = $this->route_info[3];
+        $langueManager = new LangueManager();
+        $resultat = $langueManager->delete($idLangue);
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function getView(){
@@ -88,6 +110,12 @@ class LangueController {
              && $this->route_info[2] == "langues" && trim($this->route_info[3]) != "" ){
             if ( $this->method == Constants::$GET ){
                 $json = json_encode($this->getById());
+            }
+            if ( $this->method == Constants::$DELETE ){
+                $json = json_encode($this->delete());
+            }
+            if ( $this->method == Constants::$PUT ){
+                $json = json_encode($this->update());
             }
         }
         return $json;
