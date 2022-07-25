@@ -43,12 +43,19 @@ class ExperienceController {
 
     public function create(){
         $response = Constants::$DEFAULT_RESPONSE;
-
-        $client = $this->dico["client"];
-        $description = $this->dico["description"];
+        $dico = $this->dico[Constants::$POST];
+        $client = $dico["client"];
+        $description = $dico["description"];
+        $taches = $dico["taches"];
+        $ville = $dico["ville"]; 
+        $projet = $dico["projet"]; 
+        $poste = $dico["poste"];
+        $debut = $dico["debut"];
+        $fin = $dico["fin"];
+        $envtech = $dico["envtech"];
         $idcv = $this->route_info[1];
-        
-        $experience = new Experience($client, $description, $idcv);
+
+        $experience = new Experience($client, $description, $taches, $ville, $projet, $poste, $debut, $fin, $envtech, $idcv);
         $expManager = new ExperienceManager();
         $resultat = $expManager->create($experience);
 
@@ -61,15 +68,45 @@ class ExperienceController {
     }
 
     public function update(){
-        if ($this->method == Constants::$PUT){
+        $response = Constants::$DEFAULT_RESPONSE;
+        $dico = $this->dico[Constants::$PUT];
+        $client = $dico["client"];
+        $description = $dico["description"];
+        $taches = $dico["taches"];
+        $ville = $dico["ville"]; 
+        $projet = $dico["projet"]; 
+        $poste = $dico["poste"];
+        $debut = $dico["debut"];
+        $fin = $dico["fin"];
+        $envtech = $dico["envtech"];
+        $idcv = $this->route_info[1];
+        $idExp = $this->route_info[3];
 
+        $experience = new Experience($client, $description, $taches, $ville, $projet, $poste, $debut, $fin, $envtech, $idcv);
+        $experience->id = $idExp;
+        $expManager = new ExperienceManager();
+        $resultat = $expManager->update($experience);
+
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function delete(){
-        if ($this->method == Constants::$DELETE){
+        $response = Constants::$DEFAULT_RESPONSE;
+        $idExp = $this->route_info[3];
+        $expManager = new ExperienceManager();
+        $resultat = $expManager->delete($idExp);
 
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function getView(){
@@ -88,6 +125,12 @@ class ExperienceController {
              && $this->route_info[2] == "experiences" && trim($this->route_info[3]) != "" ){
             if ( $this->method == Constants::$GET ){
                 $json = json_encode($this->getById());
+            }
+            if ( $this->method == Constants::$PUT ){
+                $json = json_encode($this->update());
+            }
+            if ( $this->method == Constants::$DELETE ){
+                $json = json_encode($this->delete());
             }
         }
         return $json;

@@ -62,9 +62,11 @@ class Constants {
     public static $SQL_CV_LANGUAGES_BY_ID = "select cl.id, l.libelle, cl.level from cv_languages cl, languages l where cl.idlangage = l.id and idcv = :id";
 
     //EXPERIENCE
-    public static $SQL_CREATE_EXPERIENCE = "insert into experience (client, description, idcv) values (:client, :description, :idcv)";
-    public static $SQL_SELECT_EXPERIENCES = "select id, client, description from experience where idcv = :idcv";
-    public static $SQL_SELECT_EXPERIENCE_BY_ID = "select id, client, description from experience where idcv = :idcv and id = :idExperience";
+    public static $SQL_CREATE_EXPERIENCE = "insert into experience (client, description, taches, ville, poste, projet, debut, fin, envtech, idcv) values (:client, :description, :taches, :ville, :poste, :projet, :debut, :fin, :envtech, :idcv)";
+    public static $SQL_SELECT_EXPERIENCES = "select id, client, description, taches, ville, poste, projet, debut, fin, envtech from experience where idcv = :idcv";
+    public static $SQL_SELECT_EXPERIENCE_BY_ID = "select id, client, description, taches, ville, poste, projet, debut, fin, envtech from experience where idcv = :idcv and id = :idExperience";
+    public static $SQL_UPDATE_EXPERIENCE = "update experience set client=:client, description=:description, taches=:taches, ville=:ville, poste=:poste, projet=:projet, debut=:debut, fin=:fin, envtech=:envtech where id=:id";
+    public static $SQL_DELETE_EXPERIENCE = "delete from experience where id=:idExp";
 
     //FORMATION
     public static $SQL_CREATE_FORMATION = "insert into formation(organisme, annee, description, idcv) values (:organisme, :annee, :description, :idcv)";

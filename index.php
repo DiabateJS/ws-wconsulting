@@ -10,6 +10,8 @@ include "./controllers/CompetenceFonctionnelleController.class.php";
 include "./controllers/AuthController.class.php";
 
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: *');
 header('Content-Type: application/json');
 
 $queryMethod = RequestParsing::getRequestMethod($_SERVER);
@@ -21,10 +23,18 @@ if ($queryMethod == Constants::$GET){
     $queryStringDico[Constants::$GET] = $_GET;
 }
 if ($queryMethod == Constants::$POST){
-    $queryStringDico[Constants::$POST] = $_POST;
+    parse_str(file_get_contents('php://input'), $queryStringDico[Constants::$POST]);
+    $tab = array_keys($queryStringDico[Constants::$POST])[0];
+    $tab = str_replace("_"," ",$tab);
+    $tab = json_decode($tab, true);
+    $queryStringDico[Constants::$POST] = $tab;
 }
 if ($queryMethod == Constants::$PUT){
     parse_str(file_get_contents('php://input'), $queryStringDico[Constants::$PUT]);
+    $tab = array_keys($queryStringDico[Constants::$PUT])[0];
+    $tab = str_replace("_"," ",$tab);
+    $tab = json_decode($tab, true);
+    $queryStringDico[Constants::$PUT] = $tab;
 }
 if ($queryMethod == Constants::$DELETE){
     parse_str(file_get_contents('php://input'), $queryStringDico[Constants::$DELETE]);
