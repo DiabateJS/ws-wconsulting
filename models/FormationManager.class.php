@@ -22,6 +22,27 @@ class FormationManager {
         return $result;
     }
 
+    function delete($idFormation){
+        $sql = Constants::$SQL_DELETE_FORMATION;
+        $dicoParam = array (
+            "idFormation" => $idFormation
+        );
+        $result = $this->bdManager->executePreparedQuery($sql, $dicoParam);
+        return $result;
+    }
+
+    function update($formation){
+        $sql = Constants::$SQL_UPDATE_FORMATION;
+        $dicoParam = array (
+            "organisme" => $formation->organisme,
+            "annee" => $formation->annee,
+            "description" => $formation->description,
+            "idFormation" => $formation->id
+        );
+        $result = $this->bdManager->executePreparedQuery($sql, $dicoParam);
+        return $result;
+    }
+
     function getAllFormations($idcv){
         $sql = Constants::$SQL_SELECT_FORMATIONS;
         $entete = array("id","organisme","annee","description");

@@ -73,6 +73,8 @@ class Constants {
     public static $SQL_CREATE_FORMATION = "insert into formation(organisme, annee, description, idcv) values (:organisme, :annee, :description, :idcv)";
     public static $SQL_SELECT_FORMATIONS = "select id, organisme, annee, description from formation where idcv = :idcv";
     public static $SQL_SELECT_FORMATION_BY_ID = "select id, organisme, annee, description from formation where idcv = :idcv and id = :idFormation";
+    public static $SQL_DELETE_FORMATION = "delete from formation where id = :idFormation";
+    public static $SQL_UPDATE_FORMATION = "update formation set organisme=:organisme, annee=:annee, description=:description where id=:idFormation";
 
     //LANGUE
     public static $SQL_CREATE_LANGUE = "insert into langue(libelle, niveau, idcv) values (:libelle, :niveau, :idcv)";

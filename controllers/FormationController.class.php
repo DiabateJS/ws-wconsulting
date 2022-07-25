@@ -43,10 +43,10 @@ class FormationController {
 
     public function create(){
         $response = Constants::$DEFAULT_RESPONSE;
-
-        $organisme = $this->dico["organisme"];
-        $annee = $this->dico["annee"];
-        $description = $this->dico["description"];
+        $dico = $this->dico[Constants::$POST];
+        $organisme = $dico["organisme"];
+        $annee = $dico["annee"];
+        $description = $dico["description"];
         $idcv = $this->route_info[1];
         
         $formation = new Formation($organisme, $annee, $description, $idcv);
@@ -62,15 +62,38 @@ class FormationController {
     }
 
     public function update(){
-        if ($this->method == Constants::$PUT){
+        $response = Constants::$DEFAULT_RESPONSE;
+        $dico = $this->dico[Constants::$PUT];
+        $organisme = $dico["organisme"];
+        $annee = $dico["annee"];
+        $description = $dico["description"];
+        $idcv = $this->route_info[1];
+        $idFormation = $this->route_info[3];
+        
+        $formation = new Formation($organisme, $annee, $description, $idcv);
+        $formation->id = $idFormation;
+        $formationManager = new FormationManager();
+        $resultat = $formationManager->update($formation);
 
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function delete(){
-        if ($this->method == Constants::$DELETE){
-
+        $response = Constants::$DEFAULT_RESPONSE;
+        $idFormation = $this->route_info[3];
+        $formationManager = new FormationManager();
+        $resultat = $formationManager->delete($idFormation);
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function getView(){
@@ -89,6 +112,12 @@ class FormationController {
              && $this->route_info[2] == "formations" && trim($this->route_info[3]) != "" ){
             if ( $this->method == Constants::$GET ){
                 $json = json_encode($this->getById());
+            }
+            if ( $this->method == Constants::$DELETE ){
+                $json = json_encode($this->delete());
+            }
+            if ( $this->method == Constants::$PUT ){
+                $json = json_encode($this->update());
             }
         }
         return $json;
