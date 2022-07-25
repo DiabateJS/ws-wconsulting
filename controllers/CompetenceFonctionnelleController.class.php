@@ -43,10 +43,10 @@ class CompetenceFonctionnelleController {
 
     public function create(){
         $response = Constants::$DEFAULT_RESPONSE;
-
+        $dico = $this->dico[Constants::$POST];
         $idcv = $this->route_info[1];
-        $libelle = $this->dico["libelle"];
-        $description = $this->dico["description"];
+        $libelle = $dico["libelle"];
+        $description = $dico["description"];
         
         $competenceFonctionnelle = new CompetenceFonctionnelle($libelle, $description, $idcv);
         $competenceFonctionnelleManager = new CompetenceFonctionnelleManager();
@@ -61,15 +61,37 @@ class CompetenceFonctionnelleController {
     }
 
     public function update(){
-        if ($this->method == Constants::$PUT){
+        $response = Constants::$DEFAULT_RESPONSE;
+        $dico = $this->dico[Constants::$PUT];
+        $idcv = $this->route_info[1];
+        $libelle = $dico["libelle"];
+        $description = $dico["description"];
+        
+        $competenceFonctionnelle = new CompetenceFonctionnelle($libelle, $description, $idcv);
+        $competenceFonctionnelle->id = $this->route_info[3];
+        $competenceFonctionnelleManager = new CompetenceFonctionnelleManager();
+        $resultat = $competenceFonctionnelleManager->update($competenceFonctionnelle);
 
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function delete(){
-        if ($this->method == Constants::$DELETE){
+        $response = Constants::$DEFAULT_RESPONSE;
+        $idExpFonct = $this->route_info[3];
+        $competenceFonctionnelleManager = new CompetenceFonctionnelleManager();
+        $resultat = $competenceFonctionnelleManager->delete($idExpFonct);
 
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function getView(){
@@ -88,6 +110,12 @@ class CompetenceFonctionnelleController {
              && $this->route_info[2] == "competences_fonctionnelles" && trim($this->route_info[3]) != "" ){
             if ( $this->method == Constants::$GET ){
                 $json = json_encode($this->getById());
+            }
+            if ( $this->method == Constants::$DELETE ){
+                $json = json_encode($this->delete());
+            }
+            if ( $this->method == Constants::$PUT ){
+                $json = json_encode($this->update());
             }
         }
 

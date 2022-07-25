@@ -68,6 +68,7 @@ class Constants {
     public static $SQL_UPDATE_EXPERIENCE = "update experience set client=:client, description=:description, taches=:taches, ville=:ville, poste=:poste, projet=:projet, debut=:debut, fin=:fin, envtech=:envtech where id=:id";
     public static $SQL_DELETE_EXPERIENCE = "delete from experience where id=:idExp";
 
+
     //FORMATION
     public static $SQL_CREATE_FORMATION = "insert into formation(organisme, annee, description, idcv) values (:organisme, :annee, :description, :idcv)";
     public static $SQL_SELECT_FORMATIONS = "select id, organisme, annee, description from formation where idcv = :idcv";
@@ -85,6 +86,8 @@ class Constants {
     public static $SQL_SELECT_COMPETENCES_FONCTIONNELLES = "select id, libelle, description from competences_fonctionnelles where idcv = :idcv";
     public static $SQL_CREATE_COMPETENCE_FONCTIONNELLE = "insert into competences_fonctionnelles (libelle, description, idcv) values (:libelle, :description, :idcv)";
     public static $SQL_SELECT_COMPETENCE_FONCTIONNELLE = "select id, libelle, description from competences_fonctionnelles where idcv = :idcv and id = :idCompFonct";
+    public static $SQL_DELETE_COMPETENCE_FONCTIONNELLE = "delete from competences_fonctionnelles where id=:idExprFonct";
+    public static $SQL_UPDATE_COMPETENCE_FONCTIONNELLE = "update competences_fonctionnelles set libelle=:libelle, description=:description where id=:idExprFonct";
 
 }
 ?>

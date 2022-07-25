@@ -1,6 +1,7 @@
 <?php
 
 class CompetenceFonctionnelle {
+    public $id;
     public $libelle;
     public $description;
     public $idcv;

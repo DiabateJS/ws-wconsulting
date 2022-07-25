@@ -21,6 +21,26 @@ class CompetenceFonctionnelleManager {
         return $result;
     }
 
+    function update($competenceFonctionnelle) {
+        $sql = Constants::$SQL_UPDATE_COMPETENCE_FONCTIONNELLE;
+        $dicoParam = array (
+            "libelle" => $competenceFonctionnelle->libelle,
+            "description" => $competenceFonctionnelle->description,
+            "idExprFonct" => $competenceFonctionnelle->id
+        );
+        $result = $this->bdManager->executePreparedQuery($sql, $dicoParam);
+        return $result;
+    }
+
+    function delete($idExprFonct) {
+        $sql = Constants::$SQL_DELETE_COMPETENCE_FONCTIONNELLE;
+        $dicoParam = array (
+            "idExprFonct" => $idExprFonct
+        );
+        $result = $this->bdManager->executePreparedQuery($sql, $dicoParam);
+        return $result;
+    }
+
     function getAllCompetencesFonctionnelles($idcv){
         $sql = Constants::$SQL_SELECT_COMPETENCES_FONCTIONNELLES;
         $entete = array("id","libelle","description");
