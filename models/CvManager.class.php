@@ -24,6 +24,20 @@ class CvManager {
         return $result;
     }
 
+    function update($cv) {
+        $sql = "update cv set titre=:titre, poste=:poste, annee=:annee, dispo=:dispo, intro=:intro where id=:idCv";
+        $dicoParam = array (
+            "titre" => $cv->titre,
+            "poste" => $cv->poste,
+            "annee" => $cv->annee,
+            "dispo" => $cv->dispo,
+            "intro" => $cv->intro,
+            "idCv"  => $cv->id
+        );
+        $result = $this->bdManager->executePreparedQuery($sql, $dicoParam);
+        return $result;
+    }
+
     function getAll(){
         $sql = Constants::$SQL_ALL_CV;
         $entete = array("id","titre","poste","annee","dispo","intro","userid","name");

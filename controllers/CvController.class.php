@@ -66,9 +66,30 @@ class CvController {
     }
 
     public function update(){
-        if ($this->method == Constants::$PUT){
+        $response = Constants::$DEFAULT_RESPONSE;
+        $dico = $this->dico[Constants::$PUT];
+        $titre = $dico["titre"];
+        $poste = $dico["poste"];
+        $annee = $dico["annee"];
+        $dispo = $dico["dispo"];
+        $intro = $dico["intro"];
+        $idCv = $this->route_info[1];
+        $userid = 1;
+        $experiences = array(); 
+        $formations = array();
+        $langues = array();
 
+        $cv = new Cv($titre, $poste, $annee, $dispo, $intro, $userid,$experiences, $formations, $langues);
+        $cv->id = $idCv;
+        $cvManager = new CvManager();
+        $resultat = $cvManager->update($cv);
+
+        $response["code"] = Constants::$SERVER_ERROR_CODE;
+        $response["resultat"] = $response["data"];
+        if (count($resultat["errors"]) == 0){
+            $response["code"] = Constants::$SUCESS_CODE;
         }
+        return $response;
     }
 
     public function delete(){
@@ -91,6 +112,9 @@ class CvController {
         if ( $this->route_info[0] == "cvs" &&  $this->route_info[1] != "" ){
             if ( $this->method == Constants::$GET ){
                 $json = json_encode($this->getById());
+            }
+            if ( $this->method == Constants::$PUT ){
+                $json = json_encode($this->update());
             }
         }
         return $json;
